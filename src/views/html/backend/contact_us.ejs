@@ -1,0 +1,65 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" sc>
+        <title>Inquiry</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans%7CRoboto" rel="stylesheet">
+        <!--[if !mso]><!-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
+        <!--<![endif]-->
+
+        <style type="text/css">
+            @media only screen and (max-width: 480px) {                  
+                table {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="font-family: 'Open Sans', sans-serif; background-color:#fafafa; padding-top:0px; position:relative; overflow-x: hidden;">        
+        <table width="600" style="margin:0px auto;display:table; border-collapse: collapse; padding: 0px;">
+            <tr>
+                <td align="center" style="padding: 14px 0;">
+                    <img src="<%=imgUrl%>" style="height: 100px; width:100px;" alt="">
+                </td>  
+            <tr>      
+            <tr>
+                <td>
+                    <table style="background:#ffffff;margin:0px auto; border-radius: 14px; box-shadow: 0 0px 6px #ececec;" width="600">
+                        <!-- <tr>
+                            <td align="center" style="padding: 20px 0px 32px;">
+                                <img src="./images/password-img.png" width="" height="" alt=""></a>         
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td align="center">
+                                <!-- <h1 style="text-transform: uppercase; font-size: 18px; margin: 10px 0px 0px 0px;">Hello 
+                                <span style="font-size: 16px; line-height: 30px; margin: 10px 0 0;"><%=user%>,</span></h1> -->
+                                <p style="font-size: 16px; line-height: 30px; margin: 10px 0 0; font-weight: bold;">Please check below contact form details</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <h3 style="font-size: 20px; margin: 10px; color: #223263;"><b>Name</b> : <%=contact.name%></h3>
+                                <% if(contact.email) { %>
+                                    <h3 style="font-size: 20px; margin: 10px; color: #223263;"><b>Email</b> : <%=contact.email%></h3>
+                                <% }%>
+                                <h3 style="font-size: 20px; margin: 10px; color: #223263;"><b>Message</b> : 
+                                    <span style="font-size: 16px; line-height: 30px; margin: 10; font-weight: bold;"><%=contact.message%></span>
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                            </td>
+                        </tr>
+                    </table>
+                </td> 
+            </tr>    
+        </table> 
+
+    </body>
+
+</html>
