@@ -10,6 +10,7 @@ const UserController = require('../../api/controllers/UserController');
 router.post('/sign-up', GlobalAuthClass.initialAuthenticate,UserController.signup);
 
 // sign in api
-// router.post('/sign-in', GlobalAuthClass.initialAuthenticate,UserController.signin);
+router.post('/sign-in', GlobalAuthClass.initialAuthenticate,UserController.signin);
+
 
 module.exports = router;

@@ -58,6 +58,30 @@ class ApiValidation{
             return promise.reject(error)
         }
     }
+    async validateSignIn(body){
+        try{
+            const schema = joi.object({
+                register_type:joi.valid('1','2','3','4').required(),
+                email:joi.when('register_type',{
+                        is: '1',
+                        then: 
+                        joi.string().max(100).regex(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).trim(true).required()
+                        .messages({ 'string.pattern.base': custMessages[lang]['INVALID_EMAIL'] })
+                    }),
+                password: joi.when('register_type', {is: '1',then:joi.string().min(6).max(18).required()}),
+                google_id: joi.when('register_type', {is: '2',then:joi.string().required()}),
+                facebook_id: joi.when('register_type', {is: '3',then:joi.string().required()}),
+                apple_id: joi.when('register_type', {is: '4',then:joi.string().required()}),
+                name:joi.allow('').optional(),
+            });
+            return await schema.validateAsync(body,options);
+        }catch(error){
+            console.log('error ====>',error);
+            error.code = 400;
+            error.message = error.details[0].message;
+            return promise.reject(error)
+        }
+    }
 }
 
 module.exports = new ApiValidation()

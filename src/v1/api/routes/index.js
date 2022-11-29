@@ -5,6 +5,4 @@ const userRoutes = require('../../api/routes/user');
 
 router.use('/user', userRoutes);
 
-
-
 module.exports = router

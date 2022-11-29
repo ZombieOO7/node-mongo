@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const { UserDeviceToken } = require('../models/index')
+const bcrypt = require('bcrypt');
 
 module.exports = (mongoose) => {
     const UserSchema = new Schema({
-        user_id: {
-            type:Schema.Types.ObjectId,
-        },
+        // user_id: {
+        //     type:Schema.Types.ObjectId,
+        //     required:true,
+        // },
         name:{
             type: String,
             required: false,
@@ -17,7 +20,7 @@ module.exports = (mongoose) => {
         email:{
             type: String,
             required: false,
-            unique: true
+            // unique: true
         },
         apple_id:{
             type: String,
@@ -38,6 +41,11 @@ module.exports = (mongoose) => {
         password: {
             type: String,
             required: false,
+            set : value =>{
+                if(value){
+                    return bcrypt.hashSync(value, 10);
+                }
+            }
         },
         status:{
             type: Number, // 0=inactive,1=active
@@ -51,9 +59,20 @@ module.exports = (mongoose) => {
         last_active_at:{
             type: Date,
             required: false,
-        }
+        },
+        DeviceTokens: [{
+            type:Schema.Types.ObjectId,
+            ref: "UserDeviceToken"
+        }],
     },{
         timestamps: true
     });
+    UserSchema.methods.comparePassword = function (password,cb) {
+        if(bcrypt.compareSync(password, this.password||'') == true){
+            cb(null, true);
+        }else{
+            return cb('invalid password.');
+        }
+    }
     return mongoose.model('User',UserSchema,'le_users')
 };
