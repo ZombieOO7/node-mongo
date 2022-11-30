@@ -4,7 +4,7 @@ env.config();
 const validate = require('../validators/admin/index');
 const crypto = require("crypto");
 const passport = require("passport");
-const {User} = require('../../data/models/index');
+const {User,UserDeviceToken} = require('../../data/models/index');
 const responseHelper = require('../../v1/api/resources/response');
 
 const getToken = headers => {
@@ -101,7 +101,7 @@ class GlobalAuthClass {
         try {
             var validation = await validate.validateHeaders(req.headers);
             if (validation.status == false) {
-                return ResponseHelper.error(false, res, validation.message || '', 400);
+                return responseHelper.error(res, validation.message || '', 400);
             }
             const token = await getToken(req.headers);
             if (!token) {
@@ -112,9 +112,7 @@ class GlobalAuthClass {
 
             // check that token is available or not
             const userDeviceToken = await UserDeviceToken.findOne({
-                where: {
                     device_token: token
-                }
             })
             if (!userDeviceToken) {
                 var error = new Error("TOKEN_NOT_PRESENT");
@@ -122,29 +120,27 @@ class GlobalAuthClass {
                 throw error;
             }
 
-            const userData = await passport.authenticate("Bearer", {
-                session: false,
-                failureMessage: true
-            }, async (userData) => {
+            const userData = await passport.authenticate("Bearer", {session: false,failureMessage: true}, async (userData) => {
                 if (userData == null) {
-                    return ResponseHelper.error(false, res, 'TOKEN_EXPIRED' || '', 401);
+                    return responseHelper.error(res, 'TOKEN_EXPIRED' || '', 401);
                 } else if (userData.status == false) {
-                    return ResponseHelper.error(false, res, userData.error || '', 405);
+                    return responseHelper.error(res, userData.error || '', 405);
                 } else {
                     req.authUser = userData.user;
                     req.userToken = token;
-                    req.authId = userData.user.user_id;
+                    req.authId = userData.user._id;
+                    req.tokenId = userDeviceToken._id;
                     if (userData.user.email_verified_at == null) {
-                        return ResponseHelper.error(false, res, 'EMAIL_NOT_VERIFIED' || '', 400);
+                        return responseHelper.error(res, 'EMAIL_NOT_VERIFIED' || '', 400);
                     }
                     if (userData.user.status == 'inactive' || userData.user.status == 0) {
-                        return ResponseHelper.error(false, res, 'USER_BANNED' || '', 403);
+                        return responseHelper.error(res, 'USER_BANNED' || '', 403);
                     }
                 }
                 next()
             })(req, res, next);
         } catch (error) {
-            return ResponseHelper.error(false, res, error.message || '', error.code || 500);
+            return responseHelper.error(res, error.message || '', error.code || 500);
         }
     }
 }

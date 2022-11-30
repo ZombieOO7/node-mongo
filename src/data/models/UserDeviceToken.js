@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { User } = require('../models/index')
 
 module.exports = (mongoose) => {
     const deviceSchema = new Schema({

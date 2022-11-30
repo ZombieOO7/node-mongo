@@ -132,7 +132,8 @@
         "APPOINTMENT_DETAIL" : "Appointment detail",
         "APPOINTMENT_SAVE" : "Appointment save successfully",
         "APPOINTMENT_LIST" : "Appointment list",
-        "APPOINTMENT_DELETE" : "Appointment deleted successfully"
+        "APPOINTMENT_DELETE" : "Appointment deleted successfully",
+        "USER_DETAIL":"User Detail"
     },
     "USER_NOT_FOUND": "USER NOT FOUND",
     "VERIFIED": "Account Already Verified"

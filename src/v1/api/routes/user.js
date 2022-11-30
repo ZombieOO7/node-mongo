@@ -12,5 +12,13 @@ router.post('/sign-up', GlobalAuthClass.initialAuthenticate,UserController.signu
 // sign in api
 router.post('/sign-in', GlobalAuthClass.initialAuthenticate,UserController.signin);
 
+// user detail
+router.post('/detail', GlobalAuthClass.passportAuthenticate,UserController.detail);
+
+// logout api
+router.post('/logout', GlobalAuthClass.passportAuthenticate,UserController.logout)
+
+// refresh token
+router.post('/refresh-token',UserController.refreshToken)
 
 module.exports = router;

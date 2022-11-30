@@ -88,7 +88,6 @@ class UserService {
         const t = await conn.startSession();
         t.startTransaction();
         try{
-            var attributes = ['user_id','name','email','password','google_id','register_type','facebook_id','email_verified_at','status','createdAt','updatedAt'];
             var find,user,registerType;
             // google
             if(req.body.register_type ==2){
